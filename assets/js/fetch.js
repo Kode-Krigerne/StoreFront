@@ -23,13 +23,13 @@ function handleFetch(data, type) {
     switch (type) {
         case "categories":
             categoryList = data;
-            makeCategories(data);
+            createCategories(data);
             break;
         case "products":
-            makeProducts(data);
+            createProducts(data);
             break;
         case "category":
-            makeProducts(data);
+            createProducts(data);
             break;
         case "search":
             let products = data.products;
@@ -38,7 +38,7 @@ function handleFetch(data, type) {
                 console.log("No search results");
                 return;
             }
-            makeProducts(data);
+            createProducts(data);
             break;
         default:
             console.error("Invalid type");

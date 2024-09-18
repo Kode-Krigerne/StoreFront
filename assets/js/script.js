@@ -1,4 +1,4 @@
-function makeCategories(data) {
+function createCategories(data) {
     const categories = document.querySelector(".categories");
     let categoriesHTML = "";
 
@@ -11,7 +11,7 @@ function makeCategories(data) {
     categories.innerHTML = categoriesHTML;
 }
 
-function makeProducts(data) {
+function createProducts(data) {
     const products = document.querySelector(".products");
     let productList = data.products;
     let productsHTML = "";
