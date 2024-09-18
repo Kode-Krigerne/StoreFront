@@ -1,8 +1,12 @@
 let cart = [];
 
 getCart();
+createCategories("https://dummyjson.com/products/categories");
+getProducts("https://dummyjson.com/products");
 
-function createCategories(categories) {
+async function createCategories(url) {
+    let categories = await getData(url, "categories");
+
     const categoriesElement = document.querySelector(".categories");
     let categoriesHTML = "";
 
@@ -15,10 +19,43 @@ function createCategories(categories) {
     categoriesElement.innerHTML = categoriesHTML;
 }
 
-function createProducts(data) {
-    const products = document.querySelector(".products");
-    let productList = data.products;
+async function getProducts(url) {
+    let products = await getData(url, "products");
+
+    createProducts(products);
+}
+
+async function selectCategory(index) {
+    let url = `https://dummyjson.com/products/category/${categoryList[index].slug}`;
+    let products = await getData(url, "products");
+
+    createProducts(products);
+}
+
+const searchInput = document.getElementById("search-input");
+searchInput.addEventListener("change", function () {
+    searchProducts();
+});
+
+async function searchProducts() {
+    let searchInputValue = searchInput.value;
+
+    let products = await getData(
+        `https://dummyjson.com/products/search?q=${searchInputValue}`,
+        "products"
+    );
+
+    createProducts(products);
+}
+
+function createProducts(productList) {
+    const productsElement = document.querySelector(".products");
     let productsHTML = "";
+
+    if (productList.length < 1) {
+        productsElement.innerHTML = "<h2>No products found</h2>";
+        return;
+    }
 
     productList.forEach((product) => {
         productsHTML += `
@@ -31,30 +68,11 @@ function createProducts(data) {
         `;
     });
 
-    products.innerHTML = productsHTML;
-}
-
-function selectCategory(index) {
-    let url = categoryList[index].url;
-    getData(url, "category");
-}
-
-const searchInput = document.getElementById("search-input");
-searchInput.addEventListener("change", function () {
-    searchProducts();
-});
-
-function searchProducts() {
-    let searchInputValue = searchInput.value;
-
-    getData(
-        `https://dummyjson.com/products/search?q=${searchInputValue}`,
-        "search"
-    );
+    productsElement.innerHTML = productsHTML;
 }
 
 //* CART FUNCTIONS */
-function setCart(data, type) {
+function setCart(data, type, update) {
     switch (type) {
         case "add":
             let existingProduct = cart.find(
@@ -67,7 +85,32 @@ function setCart(data, type) {
                 cart.push({ productId: data, amount: 1 });
             }
             break;
+        case "decrease":
+            let product = cart.find((product) => product.productId === data);
+            if (product.amount > 1) {
+                product.amount--;
+            } else {
+                cart.forEach((product, index) => {
+                    if (product.productId === data) {
+                        cart.splice(index, 1);
+                    }
+                });
+
+                if (update) {
+                    createCart();
+                }
+            }
+            break;
         case "remove":
+            cart.forEach((product, index) => {
+                if (product.productId === data) {
+                    cart.splice(index, 1);
+                }
+            });
+
+            if (update) {
+                createCart();
+            }
             break;
     }
 
