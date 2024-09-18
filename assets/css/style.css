@@ -45,7 +45,7 @@ nav {
       padding: 10px 20px;
       border-radius: 45px;
       background-color: #404040;
-    box-shadow: 4px 4px 0 white;
+      box-shadow: 4px 4px 0 white;
 
       &:focus {
         outline: none;
@@ -58,4 +58,31 @@ nav {
       height: 100px;
     }
   }
+}
+
+.categories {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    background-color: #303030;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.categories li {
+    list-style: none;
+    margin: 0 15px;
+    display: inline-block;
+}
+
+.categories a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: #f1c40f;
+    }
 }
