@@ -1,0 +1,61 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+nav {
+  height: 140px;
+  width: 100%;
+  background-color: #202020;
+  font-family: "Poppins", sans-serif;
+
+  ul {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    list-style: none;
+
+    li {
+      a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: #f1c40f;
+        }
+      }
+    }
+
+    #logo {
+      max-width: 316px;
+      height: 100%;
+    }
+
+    #search-input {
+      border: none;
+      height: 70px;
+      width: 800px;
+      padding: 10px 20px;
+      border-radius: 45px;
+      background-color: #404040;
+    box-shadow: 4px 4px 0 white;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 5px #f1c40f;
+      }
+    }
+
+    #basket {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
