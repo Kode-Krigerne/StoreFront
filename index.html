@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
 
-    <link rel="stylesheet" href="/assets/css/style.css" />
+        <link rel="stylesheet" href="/assets/css/style.css" />
 
-    <script src="assets/js/fetch.js" defer></script>
-    <script src="assets/js/script.js" defer></script>
-  </head>
-  <body>
-    <nav>
-      <ul>
-        <li>
-          <a  href="#"><img id="logo" src="/assets/img/logo.svg" alt="" /></a>
-        </li>
-        <input id="search-input" type="search" placeholder="Hvad søger du?" />
-        <li>
-          <a href=""><img id="basket" src="/assets/img/basket.svg" alt=""></a>
-        </li>
-      </ul>
-    </nav>
+        <script src="assets/js/fetch.js" defer></script>
+        <script src="assets/js/script.js" defer></script>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#"
+                        ><img id="logo" src="/assets/img/logo.svg" alt=""
+                    /></a>
+                </li>
+                <input
+                    id="search-input"
+                    type="search"
+                    placeholder="Hvad søger du?"
+                />
+                <li>
+                    <a href="#">
+                        <img src="/assets/img/basket.svg" />
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
-    <div class="categories"></div>
-    <div class="products"></div>
-  </body>
+        <div id="categories"></div>
+        <div id="products-container">
+            <div id="featured-product"></div>
+            <h2>Products</h2>
+            <div id="products"></div>
+        </div>
+    </body>
 </html>

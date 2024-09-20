@@ -19,6 +19,8 @@ function getData(url, type) {
                     return data;
                 case "products":
                     return data.products;
+                case "singleProduct":
+                    return data;
                 default:
                     console.error("Invalid type");
             }

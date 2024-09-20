@@ -1,0 +1,244 @@
+@font-face {
+    font-family: "Jua";
+    src: url("/assets/fonts/Jua-Regular.ttf");
+}
+
+$gray: #2d2d2d;
+$dark-gray: #202020;
+$light-gray: #404040;
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background-color: $gray;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+}
+
+nav {
+    height: 140px;
+    width: 100%;
+    background-color: $dark-gray;
+    font-family: "Poppins", sans-serif;
+
+    ul {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        list-style: none;
+
+        li {
+            a {
+                color: #fff;
+                text-decoration: none;
+                font-size: 1.2rem;
+                font-weight: 500;
+                transition: all 0.3s ease;
+
+                #logo {
+                    max-width: 316px;
+                    height: 100%;
+                }
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+
+        #search-input {
+            border: none;
+            height: 70px;
+            width: 800px;
+            padding: 10px 20px;
+            border-radius: 45px;
+            background-color: $light-gray;
+            color: #fff;
+            box-shadow: 4px 4px 0 white;
+            font-size: 2.4rem;
+
+            &::placeholder {
+                color: #b2b2b2;
+            }
+
+            &::-webkit-search-cancel-button {
+                display: none;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+#categories {
+    display: flex;
+    background-color: $light-gray;
+    overflow: scroll;
+    padding: 15px;
+    gap: 25px;
+
+    a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 3.2rem;
+        font-weight: 500;
+        padding: 10px 20px;
+        transition: all 0.3s ease;
+        background-color: $gray;
+        cursor: pointer;
+        border-radius: 15px;
+        white-space: nowrap;
+        font-style: italic;
+    }
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+#products-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0;
+
+    #featured-product {
+        max-width: 1200px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        background-color: $light-gray;
+        border-radius: 5px;
+
+        img {
+            width: 50%;
+        }
+
+        .information {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px;
+
+            h1 {
+                font-size: 4.1rem;
+                font-family: "Jua", sans-serif;
+                text-align: center;
+            }
+
+            p {
+                width: 500px;
+                font-size: 2rem;
+                font-style: italic;
+                text-align: center;
+            }
+
+            .rating {
+                .star {
+                    width: 66px;
+                    height: 66px;
+
+                    &.opacity {
+                        opacity: 0.2;
+                    }
+                }
+            }
+
+            .price {
+                font-size: 3.2rem;
+                font-family: "Jua", sans-serif;
+            }
+        }
+    }
+
+    h2 {
+        font-size: 4.1rem;
+        font-family: "Jua", sans-serif;
+        margin: 20px 0;
+        text-decoration: underline;
+    }
+
+    #products {
+        max-width: 1200px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+
+        .product {
+            max-width: 285px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: $light-gray;
+            border-radius: 5px;
+            gap: 10px;
+            overflow: hidden;
+
+            .information {
+                img {
+                    width: 100%;
+                }
+
+                h3 {
+                    font-size: 3rem;
+                    font-family: "Jua", sans-serif;
+                    padding: 0 10px;
+                    line-height: 30px;
+                }
+
+                p {
+                    font-size: 1.6rem;
+                    color: #fff;
+                    font-style: italic;
+                    padding: 0 10px;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 3;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            .actions {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding: 0 10px 10px 10px;
+
+                p {
+                    font-size: 2.4rem;
+                    font-family: "Jua";
+                }
+
+                a {
+                    font-size: 2.6rem;
+                    font-family: "Jua";
+                    padding: 5px 7px;
+                    background-color: $dark-gray;
+                    border-radius: 1000px;
+                    box-shadow: 2px 2px 0 white;
+                    cursor: pointer;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+}

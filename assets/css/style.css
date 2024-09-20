@@ -1,7 +1,21 @@
+@font-face {
+  font-family: "Jua";
+  src: url("/assets/fonts/Jua-Regular.ttf");
+}
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #2d2d2d;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
 }
 
 nav {
@@ -9,53 +23,187 @@ nav {
   width: 100%;
   background-color: #202020;
   font-family: "Poppins", sans-serif;
-
-  ul {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    list-style: none;
-
-    li {
-      a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 1.2rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
-
-        &:hover {
-          color: #f1c40f;
-        }
-      }
-    }
-
-    #logo {
-      max-width: 316px;
-      height: 100%;
-    }
-
-    #search-input {
-      border: none;
-      height: 70px;
-      width: 800px;
-      padding: 10px 20px;
-      border-radius: 45px;
-      background-color: #404040;
-    box-shadow: 4px 4px 0 white;
-
-      &:focus {
-        outline: none;
-        box-shadow: 0 0 5px #f1c40f;
-      }
-    }
-
-    #basket {
-      width: 100px;
-      height: 100px;
-    }
-  }
 }
+nav ul {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  list-style: none;
+}
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+nav ul li a #logo {
+  max-width: 316px;
+  height: 100%;
+}
+nav ul li a img {
+  width: 100%;
+}
+nav ul #search-input {
+  border: none;
+  height: 70px;
+  width: 800px;
+  padding: 10px 20px;
+  border-radius: 45px;
+  background-color: #404040;
+  color: #fff;
+  box-shadow: 4px 4px 0 white;
+  font-size: 2.4rem;
+}
+nav ul #search-input::-moz-placeholder {
+  color: #b2b2b2;
+}
+nav ul #search-input::placeholder {
+  color: #b2b2b2;
+}
+nav ul #search-input::-webkit-search-cancel-button {
+  display: none;
+}
+nav ul #search-input:focus {
+  outline: none;
+}
+
+#categories {
+  display: flex;
+  background-color: #404040;
+  overflow: scroll;
+  padding: 15px;
+  gap: 25px;
+}
+#categories a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 3.2rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+  background-color: #2d2d2d;
+  cursor: pointer;
+  border-radius: 15px;
+  white-space: nowrap;
+  font-style: italic;
+}
+#categories::-webkit-scrollbar {
+  display: none;
+}
+
+#products-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0;
+}
+#products-container #featured-product {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #404040;
+  border-radius: 5px;
+}
+#products-container #featured-product img {
+  width: 50%;
+}
+#products-container #featured-product .information {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 20px;
+}
+#products-container #featured-product .information h1 {
+  font-size: 4.1rem;
+  font-family: "Jua", sans-serif;
+  text-align: center;
+}
+#products-container #featured-product .information p {
+  width: 500px;
+  font-size: 2rem;
+  font-style: italic;
+  text-align: center;
+}
+#products-container #featured-product .information .rating .star {
+  width: 66px;
+  height: 66px;
+}
+#products-container #featured-product .information .rating .star.opacity {
+  opacity: 0.2;
+}
+#products-container #featured-product .information .price {
+  font-size: 3.2rem;
+  font-family: "Jua", sans-serif;
+}
+#products-container h2 {
+  font-size: 4.1rem;
+  font-family: "Jua", sans-serif;
+  margin: 20px 0;
+  text-decoration: underline;
+}
+#products-container #products {
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+#products-container #products .product {
+  max-width: 285px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #404040;
+  border-radius: 5px;
+  gap: 10px;
+  overflow: hidden;
+}
+#products-container #products .product .information img {
+  width: 100%;
+}
+#products-container #products .product .information h3 {
+  font-size: 3rem;
+  font-family: "Jua", sans-serif;
+  padding: 0 10px;
+  line-height: 30px;
+}
+#products-container #products .product .information p {
+  font-size: 1.6rem;
+  color: #fff;
+  font-style: italic;
+  padding: 0 10px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#products-container #products .product .actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 10px 10px 10px;
+}
+#products-container #products .product .actions p {
+  font-size: 2.4rem;
+  font-family: "Jua";
+}
+#products-container #products .product .actions a {
+  font-size: 2.6rem;
+  font-family: "Jua";
+  padding: 5px 7px;
+  background-color: #202020;
+  border-radius: 1000px;
+  box-shadow: 2px 2px 0 white;
+  cursor: pointer;
+  white-space: nowrap;
+}/*# sourceMappingURL=style.css.map */
