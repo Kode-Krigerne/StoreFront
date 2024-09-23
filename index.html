@@ -21,7 +21,7 @@
         <nav>
             <ul>
                 <li>
-                    <a href="#"
+                    <a onclick='toggleView("products", true)'
                         ><img id="logo" src="/assets/img/logo.svg" alt=""
                     /></a>
                 </li>
@@ -31,7 +31,7 @@
                     placeholder="Hvad søger du?"
                 />
                 <li>
-                    <a href="#">
+                    <a onclick='toggleView("cart")'>
                         <img src="/assets/img/basket.svg" />
                     </a>
                 </li>
@@ -43,6 +43,18 @@
             <div id="featured-product"></div>
             <h2>Products</h2>
             <div id="products"></div>
+        </div>
+        <div id="cart">
+            <div id="cart-container">
+                <div id="cart-products"></div>
+                <div id="cart-footer">
+                    <ul>
+                        <li><p id="total-items">Total Items: 0</p></li>
+                        <li><p id="total-cost">Total Cost: $0</p></li>
+                        <li><a>Checkout</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </body>
 </html>

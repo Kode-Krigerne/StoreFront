@@ -1,9 +1,33 @@
 let cart = [];
+const productsContainerElement = document.getElementById("products-container");
+const cartContainerElement = document.getElementById("cart-container");
 
 getCart();
-featuredProduct();
 createCategories("https://dummyjson.com/products/categories");
-getProducts("https://dummyjson.com/products");
+toggleView(sessionStorage.getItem("view"), true);
+
+function toggleView(view, update) {
+    switch (view) {
+        case "products":
+            if (update) {
+                featuredProduct();
+                document.getElementById("featured-product").style.display =
+                    "flex";
+                getProducts("https://dummyjson.com/products");
+            }
+
+            cartContainerElement.style.display = "none";
+            productsContainerElement.style.display = "flex";
+            sessionStorage.setItem("view", "products");
+            break;
+        case "cart":
+            productsContainerElement.style.display = "none";
+            cartContainerElement.style.display = "flex";
+            sessionStorage.setItem("view", "cart");
+            createCart();
+            break;
+    }
+}
 
 async function createCategories(url) {
     let categories = await getData(url, "categories");
@@ -62,7 +86,8 @@ async function getProducts(url) {
 async function selectCategory(index) {
     let url = `https://dummyjson.com/products/category/${categoryList[index].slug}`;
     let products = await getData(url, "products");
-
+    toggleView("products");
+    document.getElementById("featured-product").style.display = "none";
     createProducts(products);
 }
 
@@ -158,4 +183,55 @@ function setCart(data, type, update) {
 
 function getCart() {
     cart = JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+async function createCart() {
+    const cartElement = document.getElementById("cart-products");
+    let cartHTML = "";
+
+    if (cart.length < 1) {
+        cartElement.innerHTML = "<h2>No products in cart</h2>";
+        return;
+    }
+
+    let total = 0;
+
+    console.log(cart);
+
+    for (product of cart) {
+        console.log(product);
+
+        let productInfo = await getData(
+            `https://dummyjson.com/products/${product.productId}`,
+            "singleProduct"
+        );
+
+        console.log(productInfo);
+
+        total += productInfo.price * product.amount;
+
+        cartHTML += `
+            <div class="product">
+                <img src="${productInfo.thumbnail}" alt="${productInfo.title}">    
+                <div class="information">
+                    <h3>${productInfo.title}</h3>
+                    <p>$${productInfo.description}</p>
+                </div>
+                <div class="actions">
+                    <a onclick='setCart(${productInfo.id}, "decrease", true)'>-</a>
+                    <p>${product.amount}</p>
+                    <a onclick='setCart(${productInfo.id}, "add", true)'>+</a>
+                    <a onclick='setCart(${productInfo.id}, "remove", true)'>Remove</a>
+                </div>
+            </div>
+        `;
+    }
+
+    const totalItems = document.getElementById("total-items");
+    const totalCost = document.getElementById("total-cost");
+
+    totalItems.innerHTML = `Total items: ${cart.length}`;
+    totalCost.innerHTML = `Total cost: $${total}`;
+
+    cartElement.innerHTML = cartHTML;
 }

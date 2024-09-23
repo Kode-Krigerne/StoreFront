@@ -6,6 +6,8 @@
 $gray: #2d2d2d;
 $dark-gray: #202020;
 $light-gray: #404040;
+$featured-product-background: rgba(57, 88, 255, 0.5);
+$button-background: rgb(57, 88, 255);
 
 * {
     padding: 0;
@@ -113,19 +115,34 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px 0;
+    padding: 30px 20px;
+
+    @media screen and (max-width: 980px) {
+        padding: 30px 0;
+    }
 
     #featured-product {
         max-width: 1200px;
         width: 100%;
         display: flex;
         justify-content: space-between;
-        background-color: $light-gray;
+        background-color: $featured-product-background;
         border-radius: 5px;
         overflow: hidden;
+        padding: 20px;
+        box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 1);
+
+        @media screen and (max-width: 980px) {
+            flex-direction: column;
+            align-items: center;
+        }
 
         img {
             width: 50%;
+
+            @media screen and (max-width: 980px) {
+                width: 100%;
+            }
         }
 
         .information {
@@ -138,6 +155,11 @@ nav {
             overflow: hidden;
             padding: 20px;
 
+            @media screen and (max-width: 980px) {
+                width: 100%;
+                padding: 0;
+            }
+
             h1 {
                 font-size: 4.1rem;
                 font-family: "Jua", sans-serif;
@@ -145,13 +167,17 @@ nav {
             }
 
             p {
-                width: 500px;
+                max-width: 500px;
                 font-size: 2rem;
                 font-style: italic;
                 text-align: center;
             }
 
             .rating {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+
                 .star {
                     width: 66px;
                     height: 66px;
@@ -178,13 +204,24 @@ nav {
 
     #products {
         max-width: 1200px;
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         justify-content: center;
-        flex-wrap: wrap;
         gap: 20px;
 
+        @media screen and (max-width: 1250px) {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+
+        @media screen and (max-width: 960px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (max-width: 600px) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
         .product {
-            max-width: 285px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -192,6 +229,10 @@ nav {
             border-radius: 5px;
             gap: 10px;
             overflow: hidden;
+
+            @media screen and (max-width: 600px) {
+                border-radius: 0px;
+            }
 
             .information {
                 img {
@@ -238,6 +279,82 @@ nav {
                     box-shadow: 2px 2px 0 white;
                     cursor: pointer;
                     white-space: nowrap;
+                }
+            }
+        }
+    }
+}
+
+#cart {
+    display: flex;
+    justify-content: center;
+
+    #cart-container {
+        flex-direction: column;
+        max-width: 1200px;
+        width: 100%;
+        background-color: $light-gray;
+        margin: 50px 20px;
+        border-radius: 5px;
+        overflow: hidden;
+
+        #cart-products {
+            display: flex;
+            flex-direction: column;
+            overflow: scroll;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .product {
+                display: flex;
+                align-items: center;
+
+                img {
+                    width: 120px;
+                }
+
+                .information {
+                    h3 {
+                        font-size: 6rem;
+                        font-family: "Jua", sans-serif;
+                    }
+
+                    p {
+                        font-size: 1.2rem;
+                        font-style: italic;
+                    }
+                }
+
+                .actions {
+                    margin-left: auto;
+                }
+            }
+        }
+
+        #cart-footer {
+            background-color: $dark-gray;
+            font-size: 3rem;
+            font-family: "Jua", sans-serif;
+
+            ul {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                list-style: none;
+                padding: 16px;
+                li {
+                    p {
+                    }
+
+                    a {
+                        display: block;
+                        padding: 12px 26px;
+                        background-color: $button-background;
+                        border-radius: 1000px;
+                        box-shadow: 2px 2px 0 white;
+                    }
                 }
             }
         }
