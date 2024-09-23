@@ -1,6 +1,7 @@
 let cart = [];
 
 getCart();
+featuredProduct();
 createCategories("https://dummyjson.com/products/categories");
 getProducts("https://dummyjson.com/products");
 
@@ -19,8 +20,6 @@ async function createCategories(url) {
     categoriesElement.innerHTML = categoriesHTML;
 }
 
-featuredProduct();
-
 async function featuredProduct() {
     const featuredProductElement = document.getElementById("featured-product");
     const randomNumber = Math.floor(Math.random() * 194);
@@ -28,10 +27,6 @@ async function featuredProduct() {
     let url = `https://dummyjson.com/products/${randomNumber}`;
 
     let featuredProduct = await getData(url, "singleProduct");
-
-    console.log(featuredProduct);
-
-    console.log(featuredProduct.description);
 
     let ratingHTML = "";
     const rating = Math.round(featuredProduct.rating);

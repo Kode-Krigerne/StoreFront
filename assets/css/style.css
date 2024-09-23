@@ -108,6 +108,7 @@ nav ul #search-input:focus {
   justify-content: space-between;
   background-color: #404040;
   border-radius: 5px;
+  overflow: hidden;
 }
 #products-container #featured-product img {
   width: 50%;
