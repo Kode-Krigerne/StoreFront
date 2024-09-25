@@ -31,6 +31,7 @@
                     placeholder="Hvad søger du?"
                 />
                 <li>
+                    <p id="cart-amount">0</p>
                     <a onclick='toggleView("cart")'>
                         <img src="/assets/img/basket.svg" />
                     </a>
@@ -39,14 +40,16 @@
         </nav>
 
         <div id="categories"></div>
-        <div id="products-container">
+        <div id="products-container" style="display: none">
             <div id="featured-product"></div>
             <h2>Products</h2>
             <div id="products"></div>
         </div>
-        <div id="cart">
+        <div id="cart" style="display: none">
             <div id="cart-container">
-                <div id="cart-products"></div>
+                <div id="cart-products">
+                    <h2>No products in cart</h2>
+                </div>
                 <div id="cart-footer">
                     <ul>
                         <li><p id="total-items">Total Items: 0</p></li>
@@ -56,5 +59,13 @@
                 </div>
             </div>
         </div>
+
+        <footer>
+            <ul>
+                <li>&copy; 2024 Unormal</li>
+                <li>Vej i Danmark 31</li>
+                <li>CVR: 12345678</li>
+            </ul>
+        </footer>
     </body>
 </html>

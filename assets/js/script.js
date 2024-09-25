@@ -1,10 +1,12 @@
 let cart = [];
 const productsContainerElement = document.getElementById("products-container");
-const cartContainerElement = document.getElementById("cart-container");
+const cartContainerElement = document.getElementById("cart");
 
-getCart();
-createCategories("https://dummyjson.com/products/categories");
-toggleView(sessionStorage.getItem("view"), true);
+window.addEventListener("load", function () {
+    createCategories("https://dummyjson.com/products/categories");
+    getCart();
+    toggleView(sessionStorage.getItem("view") || "products", true);
+});
 
 function toggleView(view, update) {
     switch (view) {
@@ -136,7 +138,126 @@ function createProducts(productList) {
 }
 
 //* CART FUNCTIONS */
-function setCart(data, type, update) {
+
+function getCart() {
+    cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    updateCartCounter();
+}
+
+function updateCartCounter(items, price) {
+    const cartItemAmount = document.getElementById("cart-amount");
+
+    cartItemAmount.innerHTML = cart.length;
+
+    const cartElement = document.getElementById("cart-products");
+    const totalItems = document.getElementById("total-items");
+    const totalCost = document.getElementById("total-cost");
+    if (cart.length < 1) {
+        cartElement.innerHTML = "<h2>No products in cart</h2>";
+    }
+
+    totalItems.innerHTML = items ? `Total items: ${items}` : `Total items: 0`;
+    totalCost.innerHTML = price
+        ? `Total cost: $${price.toFixed(2)}`
+        : `Total cost: $0.00`;
+}
+
+async function createCart() {
+    if (cart.length < 1) {
+        return;
+    }
+
+    const cartElement = document.getElementById("cart-products");
+
+    let cartHTML = "";
+
+    for (product of cart) {
+        let productInfo = await getData(
+            `https://dummyjson.com/products/${product.productId}`,
+            "singleProduct"
+        );
+
+        let itemTotalPrice = product.amount * productInfo.price;
+
+        cartHTML += `
+            <div class="product">
+                <img src="${productInfo.thumbnail}" alt="${
+            productInfo.title
+        }">    
+                <div class="information">
+                    <h3>${productInfo.title}</h3>
+                    <p>$${productInfo.description}</p>
+                </div>
+                <div class="actions">
+                    <div class="edit">
+                        <p>$${itemTotalPrice.toFixed(2)}</p>
+                        <div class="amount">
+                            <a onclick='updateCart(event, ${
+                                productInfo.id
+                            }, "decrease")'><i class="fa-solid fa-minus"></i></a>
+                            <p>${product.amount}</p>
+                            <a onclick='updateCart(event, ${
+                                productInfo.id
+                            }, "increase")'><i class="fa-solid fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <a class="removeBTN" onclick='updateCart(event, ${
+                        productInfo.id
+                    }, "remove")'><i class="fa-solid fa-xmark"></i></a>
+                </div>
+            </div>
+        `;
+    }
+
+    updateCart();
+
+    cartElement.innerHTML = cartHTML;
+}
+
+function updateCart(data, productId, type) {
+    if (productId) {
+        const productElement = data.target.closest(".product");
+        const productTotalPrice = productElement.querySelector(".edit p");
+        const productAmount = productElement.querySelector(".amount p");
+
+        const product = cart.find(
+            (productInfo) => productInfo.productId === productId
+        );
+
+        if (
+            type === "increase" ||
+            (type === "decrease" && product.amount > 1)
+        ) {
+            setCart(productId, type);
+        } else {
+            setCart(productId, "remove");
+            productElement.remove();
+        }
+
+        productAmount.textContent =
+            type === "increase"
+                ? parseInt(productAmount.textContent) + 1
+                : parseInt(productAmount.textContent) - 1;
+
+        productTotalPrice.textContent = `$${(
+            product.amount * product.price
+        ).toFixed(2)}`;
+    }
+
+    let totalAmount = 0;
+    let totalPrice = 0;
+
+    cart.forEach((product) => {
+        totalAmount += product.amount;
+        totalPrice += product.price * product.amount;
+    });
+
+    updateCartCounter(totalAmount, totalPrice);
+}
+
+async function setCart(data, type) {
+    let product = "";
     switch (type) {
         case "add":
             let existingProduct = cart.find(
@@ -146,92 +267,44 @@ function setCart(data, type, update) {
             if (existingProduct) {
                 existingProduct.amount++;
             } else {
-                cart.push({ productId: data, amount: 1 });
+                let productData = await getData(
+                    `https://dummyjson.com/products/${data}`,
+                    "singleProduct"
+                );
+                let price = productData.price;
+
+                cart.push({
+                    productId: data,
+                    amount: 1,
+                    price: price,
+                });
+            }
+            break;
+
+        case "increase":
+            product = cart.find((product) => product.productId === data);
+            if (product) {
+                product.amount++;
+            }
+            break;
+
+        case "remove":
+            const productIndex = cart.findIndex(
+                (product) => product.productId === data
+            );
+            if (productIndex !== -1) {
+                cart.splice(productIndex, 1);
             }
             break;
         case "decrease":
-            let product = cart.find((product) => product.productId === data);
-            if (product.amount > 1) {
+            product = cart.find((product) => product.productId === data);
+            if (product) {
                 product.amount--;
-            } else {
-                cart.forEach((product, index) => {
-                    if (product.productId === data) {
-                        cart.splice(index, 1);
-                    }
-                });
-
-                if (update) {
-                    createCart();
-                }
-            }
-            break;
-        case "remove":
-            cart.forEach((product, index) => {
-                if (product.productId === data) {
-                    cart.splice(index, 1);
-                }
-            });
-
-            if (update) {
-                createCart();
             }
             break;
     }
+
+    updateCartCounter();
 
     localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-function getCart() {
-    cart = JSON.parse(localStorage.getItem("cart")) || [];
-}
-
-async function createCart() {
-    const cartElement = document.getElementById("cart-products");
-    let cartHTML = "";
-
-    if (cart.length < 1) {
-        cartElement.innerHTML = "<h2>No products in cart</h2>";
-        return;
-    }
-
-    let total = 0;
-
-    console.log(cart);
-
-    for (product of cart) {
-        console.log(product);
-
-        let productInfo = await getData(
-            `https://dummyjson.com/products/${product.productId}`,
-            "singleProduct"
-        );
-
-        console.log(productInfo);
-
-        total += productInfo.price * product.amount;
-
-        cartHTML += `
-            <div class="product">
-                <img src="${productInfo.thumbnail}" alt="${productInfo.title}">    
-                <div class="information">
-                    <h3>${productInfo.title}</h3>
-                    <p>$${productInfo.description}</p>
-                </div>
-                <div class="actions">
-                    <a onclick='setCart(${productInfo.id}, "decrease", true)'>-</a>
-                    <p>${product.amount}</p>
-                    <a onclick='setCart(${productInfo.id}, "add", true)'>+</a>
-                    <a onclick='setCart(${productInfo.id}, "remove", true)'>Remove</a>
-                </div>
-            </div>
-        `;
-    }
-
-    const totalItems = document.getElementById("total-items");
-    const totalCost = document.getElementById("total-cost");
-
-    totalItems.innerHTML = `Total items: ${cart.length}`;
-    totalCost.innerHTML = `Total cost: $${total}`;
-
-    cartElement.innerHTML = cartHTML;
 }

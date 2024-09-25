@@ -23,6 +23,9 @@ body {
     background-color: $gray;
     font-family: "Poppins", sans-serif;
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 nav {
@@ -41,12 +44,30 @@ nav {
         list-style: none;
 
         li {
+            position: relative;
+
+            p {
+                position: absolute;
+                top: 0;
+                right: 0;
+                font-size: 2.4rem;
+                font-family: "Jua", sans-serif;
+                background-color: $button-background;
+                border-radius: 1000px;
+                width: 35px;
+                height: 35px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
             a {
                 color: #fff;
                 text-decoration: none;
                 font-size: 1.2rem;
                 font-weight: 500;
                 transition: all 0.3s ease;
+                cursor: pointer;
 
                 #logo {
                     max-width: 316px;
@@ -112,10 +133,10 @@ nav {
 }
 
 #products-container {
-    display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px 20px;
+    flex: 1;
 
     @media screen and (max-width: 980px) {
         padding: 30px 0;
@@ -279,6 +300,15 @@ nav {
                     box-shadow: 2px 2px 0 white;
                     cursor: pointer;
                     white-space: nowrap;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        box-shadow: none;
+                    }
+
+                    &:active {
+                        background-color: $button-background;
+                    }
                 }
             }
         }
@@ -286,10 +316,12 @@ nav {
 }
 
 #cart {
-    display: flex;
+    display: none;
     justify-content: center;
+    flex: 1;
 
     #cart-container {
+        display: flex;
         flex-direction: column;
         max-width: 1200px;
         width: 100%;
@@ -302,6 +334,15 @@ nav {
             display: flex;
             flex-direction: column;
             overflow: scroll;
+            flex: 1;
+
+            h2 {
+                font-size: 4.1rem;
+                font-family: "Jua", sans-serif;
+                margin: 20px 0;
+                text-decoration: underline;
+                text-align: center;
+            }
 
             &::-webkit-scrollbar {
                 display: none;
@@ -310,9 +351,14 @@ nav {
             .product {
                 display: flex;
                 align-items: center;
+                border-bottom: 3px solid $dark-gray;
+
+                &:last-child {
+                    border-bottom: none;
+                }
 
                 img {
-                    width: 120px;
+                    width: 160px;
                 }
 
                 .information {
@@ -324,11 +370,50 @@ nav {
                     p {
                         font-size: 1.2rem;
                         font-style: italic;
+                        max-width: 570px;
                     }
                 }
 
                 .actions {
                     margin-left: auto;
+                    display: flex;
+                    align-items: center;
+
+                    a {
+                        cursor: pointer;
+                    }
+
+                    .removeBTN {
+                        font-size: 6rem;
+                        margin-right: 20px;
+                        margin-left: 20px;
+                        color: red;
+                    }
+
+                    .edit {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+
+                        p {
+                            font-size: 3.5rem;
+                            font-family: "Jua", sans-serif;
+                        }
+
+                        .amount {
+                            background-color: $dark-gray;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            width: 180px;
+                            padding: 5px 10px;
+                            border-radius: 5px;
+
+                            a {
+                                font-size: 3.5rem;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -355,6 +440,36 @@ nav {
                         border-radius: 1000px;
                         box-shadow: 2px 2px 0 white;
                     }
+                }
+            }
+        }
+    }
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $dark-gray;
+    font-size: 4.1rem;
+    font-style: italic;
+    color: #b5b5b5;
+    padding: 20px;
+
+    ul {
+        display: flex;
+        list-style: none;
+        gap: 32px;
+
+        li {
+            &::before {
+                content: "•";
+                margin-right: 8px;
+            }
+
+            &:first-child {
+                &::before {
+                    content: "";
                 }
             }
         }
