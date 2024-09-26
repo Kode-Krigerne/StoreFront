@@ -119,61 +119,66 @@ nav ul #search-input:focus {
 
 #product-view {
   display: none;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
   padding: 30px 20px;
 }
 #product-view .container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   max-width: 1200px;
   width: 100%;
   padding: 20px;
-  max-height: 100%;
   background-color: #404040;
 }
-#product-view .container img {
+#product-view .container .product-container {
+  display: flex;
+}
+#product-view .container .product-container img {
   max-width: 50%;
   width: 100%;
 }
-#product-view .container .information {
+#product-view .container .product-container .information {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 24px;
   padding: 20px;
 }
-#product-view .container .information h1 {
+#product-view .container .product-container .information h1 {
   font-size: 4.2rem;
   font-family: "Jua", sans-serif;
   text-align: center;
 }
-#product-view .container .information p {
+#product-view .container .product-container .information p {
   font-size: 2.4rem;
   text-align: center;
   font-style: italic;
 }
-#product-view .container .information ol {
+#product-view .container .product-container .information ol {
   display: flex;
   flex-direction: column;
   gap: 10px;
   list-style: none;
 }
-#product-view .container .information ol li {
+#product-view .container .product-container .information ol li {
   font-size: 2.4rem;
   font-style: italic;
 }
-#product-view .container .information ul {
+#product-view .container .product-container .information ul {
   width: 100%;
   display: flex;
   justify-content: space-around;
   list-style: none;
 }
-#product-view .container .information ul li p {
+#product-view .container .product-container .information ul li p {
   font-size: 3.2rem;
   font-style: normal;
   font-family: "Jua", sans-serif;
 }
-#product-view .container .information ul li a {
+#product-view .container .product-container .information ul li a {
   font-size: 2.6rem;
   font-family: "Jua", sans-serif;
   padding: 5px 7px;
@@ -184,11 +189,57 @@ nav ul #search-input:focus {
   white-space: nowrap;
   transition: all 0.3s ease;
 }
-#product-view .container .information ul li a:hover {
+#product-view .container .product-container .information ul li a:hover {
   box-shadow: none;
 }
-#product-view .container .information ul li a:active {
+#product-view .container .product-container .information ul li a:active {
   background-color: rgb(57, 88, 255);
+}
+#product-view .container .product-reviews {
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#product-view .container .product-reviews .review-container {
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  gap: 20px;
+}
+#product-view .container .product-reviews .review-container .profilePic {
+  width: 130px;
+  border-radius: 50%;
+  background-color: #202020;
+}
+#product-view .container .product-reviews .review-container .review {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+#product-view .container .product-reviews .review-container .review ul {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+}
+#product-view .container .product-reviews .review-container .review ul li h2 {
+  font-size: 4.2rem;
+  font-family: "Jua", sans-serif;
+}
+#product-view .container .product-reviews .review-container .review ul li .stars {
+  margin-left: auto;
+}
+#product-view .container .product-reviews .review-container .review ul li .stars img {
+  width: 30px;
+}
+#product-view .container .product-reviews .review-container .review ul li .stars img.opacity {
+  opacity: 0.2;
+}
+#product-view .container .product-reviews .review-container .review p {
+  font-size: 2.4rem;
+  font-style: italic;
 }
 
 #products-container {

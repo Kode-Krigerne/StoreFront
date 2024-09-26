@@ -1,10 +1,17 @@
 let cart = [];
+let categorized = {
+    Electronic: [],
+    Clothing: [],
+    Care: [],
+    Vehicles: [],
+    Other: [],
+};
 const productsContainerElement = document.getElementById("products-container");
 const cartContainerElement = document.getElementById("cart");
 const productViewElement = document.getElementById("product-view");
 
 window.addEventListener("load", function () {
-    createCategories("https://dummyjson.com/products/categories");
+    categorize("https://dummyjson.com/products/categories");
     getCart();
     toggleView(sessionStorage.getItem("view") || "products", true);
 });
@@ -39,19 +46,83 @@ function toggleView(view, update) {
     }
 }
 
-async function createCategories(url) {
+async function categorize(url) {
     let categories = await getData(url, "categories");
 
+    for (let category of categories) {
+        let slug = category.slug;
+
+        switch (slug) {
+            case "smartphones":
+            case "tablets":
+            case "laptops":
+            case "mobile-accessories":
+                categorized["Electronic"].push(category);
+                break;
+
+            case "mens-shirts":
+            case "mens-shoes":
+            case "mens-watches":
+            case "womens-bags":
+            case "womens-dresses":
+            case "womens-jewellery":
+            case "womens-shoes":
+            case "womens-watches":
+            case "sunglasses":
+            case "tops":
+                categorized["Clothing"].push(category);
+                break;
+
+            case "beauty":
+            case "fragrances":
+            case "skin-care":
+                categorized["Care"].push(category);
+                break;
+
+            case "vehicle":
+            case "motorcycle":
+                categorized["Vehicles"].push(category);
+                break;
+            default:
+                categorized["Other"].push(category);
+                break;
+        }
+    }
+
+    createCategories(categorized);
+}
+
+function createCategories(categories) {
     const categoriesElement = document.getElementById("categories");
     let categoriesHTML = "";
 
-    categories.forEach((category, index) => {
+    Object.keys(categories).forEach((category) => {
         categoriesHTML += `
-            <a onclick="selectCategory(${index})">"${category.name}"</a>
+            <a onclick='selectCategory("${category}")'>${category}</a>
         `;
     });
 
     categoriesElement.innerHTML = categoriesHTML;
+}
+
+async function selectCategory(index) {
+    let products = "";
+    for (let category in categorized) {
+        if (category === index) {
+            for (let category of categorized[index]) {
+                let productData = await getData(
+                    `https://dummyjson.com/products/category/${category.slug}`,
+                    "products"
+                );
+
+                products = [...products, ...productData];
+            }
+            toggleView("products");
+            document.getElementById("featured-product").style.display = "none";
+
+            createProducts(products);
+        }
+    }
 }
 
 async function featuredProduct() {
@@ -92,14 +163,6 @@ async function featuredProduct() {
 async function getProducts(url) {
     let products = await getData(url, "products");
 
-    createProducts(products);
-}
-
-async function selectCategory(index) {
-    let url = `https://dummyjson.com/products/category/${categoryList[index].slug}`;
-    let products = await getData(url, "products");
-    toggleView("products");
-    document.getElementById("featured-product").style.display = "none";
     createProducts(products);
 }
 
@@ -148,6 +211,21 @@ function createProducts(productList) {
 }
 
 //* Product View Functions */
+function makeStars(review) {
+    let stars = "";
+    for (let i = 0; i < review; i++) {
+        stars += `<img src="assets/img/star.svg" class="star">`;
+    }
+
+    if (review < 5) {
+        for (let i = 0; i < 5 - review; i++) {
+            stars += `<img src="assets/img/star.svg" class="star opacity">`;
+        }
+    }
+
+    return stars;
+}
+
 async function productView(productId) {
     let product = await getData(
         `https://dummyjson.com/products/${productId}`,
@@ -159,25 +237,47 @@ async function productView(productId) {
         tags += `<span>${tag}</span>`;
     });
 
+    let reviews = "";
+    product.reviews.forEach((review, index) => {
+        let stars = makeStars(review.rating, index);
+        reviews += `
+        <div class="review-container">
+            <img src="assets/img/appIcon.svg" class="profilePic" />
+            <div class="review">
+                <ul>
+                    <li><h2>${review.reviewerName}</h2></li>
+                    <li><div class="stars">${stars}</div></li>
+                </ul>
+                <p>${review.comment}</p>
+            </div>
+        </div>
+        `;
+    });
+
     toggleView("productView");
 
     let productViewHTML = "";
 
     productViewHTML += `
         <div class="container">
-            <img src="${product.thumbnail}" />
-            <div class="information">
-                <h1>${product.title}</h1>
-                <p>${product.description}</p>
-                <ol>
-                    <li>Rating: ${product.rating}</li>
-                    <li>Category: ${product.category}</li>
-                    <li>Tags: ${tags}</li>
-                </ol>
-                <ul>
-                    <li><p class="price">$${product.price}</p></li>
-                    <li><a onclick='setCart(${productId}, "add")'>Add to cart</a></li>
-                </ul>
+            <div class="product-container">
+                <img src="${product.thumbnail}" />
+                <div class="information">
+                    <h1>${product.title}</h1>
+                    <p>${product.description}</p>
+                    <ol>
+                        <li>Rating: ${product.rating}</li>
+                        <li>Category: ${product.category}</li>
+                        <li>Tags: ${tags}</li>
+                    </ol>
+                    <ul>
+                        <li><p class="price">$${product.price}</p></li>
+                        <li><a onclick='setCart(${productId}, "add")'>Add to cart</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="product-reviews">
+                ${reviews}
             </div>
         </div>
     `;
