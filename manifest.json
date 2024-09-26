@@ -3,18 +3,20 @@
     "name": "Unormal",
     "icons": [
         {
-            "src": "/assets/img/appIcon.svg",
+            "src": "assets/img/appIcon.svg",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/svg+xml"
         },
         {
-            "src": "/assets/img/appIcon.svg",
+            "src": "assets/img/appIcon.svg",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/svg+xml"
         }
     ],
-    "start_url": "/",
+    "id": "/?source=pwa",
+    "start_url": "/?source=pwa",
+    "background_color": "#202020",
     "display": "fullscreen",
-    "theme_color": "#fff",
-    "background_color": "#202020"
+    "scope": "/",
+    "theme_color": "#202020"
 }
