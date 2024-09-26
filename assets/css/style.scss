@@ -132,6 +132,94 @@ nav {
     }
 }
 
+#product-view {
+    display: none;
+    justify-content: center;
+    flex: 1;
+    padding: 30px 20px;
+
+    .container {
+        display: flex;
+        max-width: 1200px;
+        width: 100%;
+        padding: 20px;
+        max-height: 100%;
+        background-color: $light-gray;
+
+        img {
+            max-width: 50%;
+            width: 100%;
+        }
+
+        .information {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 24px;
+            padding: 20px;
+
+            h1 {
+                font-size: 4.2rem;
+                font-family: "Jua", sans-serif;
+                text-align: center;
+            }
+
+            p {
+                font-size: 2.4rem;
+                text-align: center;
+                font-style: italic;
+            }
+
+            ol {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                list-style: none;
+
+                li {
+                    font-size: 2.4rem;
+                    font-style: italic;
+                }
+            }
+
+            ul {
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                list-style: none;
+
+                li {
+                    p {
+                        font-size: 3.2rem;
+                        font-style: normal;
+                        font-family: "Jua", sans-serif;
+                    }
+
+                    a {
+                        font-size: 2.6rem;
+                        font-family: "Jua", sans-serif;
+                        padding: 5px 7px;
+                        background-color: $dark-gray;
+                        border-radius: 1000px;
+                        box-shadow: 2px 2px 0 white;
+                        cursor: pointer;
+                        white-space: nowrap;
+                        transition: all 0.3s ease;
+
+                        &:hover {
+                            box-shadow: none;
+                        }
+
+                        &:active {
+                            background-color: $button-background;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 #products-container {
     flex-direction: column;
     align-items: center;
@@ -143,6 +231,7 @@ nav {
     }
 
     #featured-product {
+        cursor: pointer;
         max-width: 1200px;
         width: 100%;
         display: flex;
@@ -258,6 +347,7 @@ nav {
             .information {
                 img {
                     width: 100%;
+                    cursor: pointer;
                 }
 
                 h3 {

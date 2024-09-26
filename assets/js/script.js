@@ -1,6 +1,7 @@
 let cart = [];
 const productsContainerElement = document.getElementById("products-container");
 const cartContainerElement = document.getElementById("cart");
+const productViewElement = document.getElementById("product-view");
 
 window.addEventListener("load", function () {
     createCategories("https://dummyjson.com/products/categories");
@@ -20,13 +21,20 @@ function toggleView(view, update) {
 
             cartContainerElement.style.display = "none";
             productsContainerElement.style.display = "flex";
+            productViewElement.style.display = "none";
             sessionStorage.setItem("view", "products");
             break;
         case "cart":
             productsContainerElement.style.display = "none";
             cartContainerElement.style.display = "flex";
+            productViewElement.style.display = "none";
             sessionStorage.setItem("view", "cart");
             createCart();
+            break;
+        case "productView":
+            productsContainerElement.style.display = "none";
+            cartContainerElement.style.display = "none";
+            productViewElement.style.display = "flex";
             break;
     }
 }
@@ -77,6 +85,8 @@ async function featuredProduct() {
             <p class="price">$${featuredProduct.price}</p>
         </div>
     `;
+
+    featuredProductElement.onclick = () => productView(randomNumber);
 }
 
 async function getProducts(url) {
@@ -122,7 +132,7 @@ function createProducts(productList) {
         productsHTML += `
             <div class="product">
                 <div class="information">
-                    <img src="${product.thumbnail}" alt="${product.title}">
+                    <img onclick="productView(${product.id})" src="${product.thumbnail}" alt="${product.title}">
                     <h3>${product.title}</h3>
                     <p>${product.description}</p>
                 </div>
@@ -135,6 +145,44 @@ function createProducts(productList) {
     });
 
     productsElement.innerHTML = productsHTML;
+}
+
+//* Product View Functions */
+async function productView(productId) {
+    let product = await getData(
+        `https://dummyjson.com/products/${productId}`,
+        "singleProduct"
+    );
+
+    let tags = "";
+    product.tags.forEach((tag) => {
+        tags += `<span>${tag}</span>`;
+    });
+
+    toggleView("productView");
+
+    let productViewHTML = "";
+
+    productViewHTML += `
+        <div class="container">
+            <img src="${product.thumbnail}" />
+            <div class="information">
+                <h1>${product.title}</h1>
+                <p>${product.description}</p>
+                <ol>
+                    <li>Rating: ${product.rating}</li>
+                    <li>Category: ${product.category}</li>
+                    <li>Tags: ${tags}</li>
+                </ol>
+                <ul>
+                    <li><p class="price">$${product.price}</p></li>
+                    <li><a onclick='setCart(${productId}, "add")'>Add to cart</a></li>
+                </ul>
+            </div>
+        </div>
+    `;
+
+    productViewElement.innerHTML = productViewHTML;
 }
 
 //* CART FUNCTIONS */
