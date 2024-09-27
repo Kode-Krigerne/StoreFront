@@ -1,7 +1,7 @@
 @charset "UTF-8";
 @font-face {
   font-family: "Jua";
-  src: url("/assets/fonts/Jua-Regular.ttf");
+  src: url("assets/fonts/Jua-Regular.ttf");
 }
 * {
   padding: 0;
@@ -129,6 +129,7 @@ nav ul #search-input:focus {
   flex-direction: column;
   align-items: center;
   max-width: 1200px;
+  gap: 32px;
   width: 100%;
   padding: 20px;
   background-color: #404040;
