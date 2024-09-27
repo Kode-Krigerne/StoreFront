@@ -239,8 +239,15 @@ nav {
 
                 .profilePic {
                     width: 130px;
+                    height: 130px;
+                    background-image: url("/assets/img/user-solid.svg");
+                    filter: invert(1);
+                    background-position: center;
+                    background-size: 80px;
+                    background-repeat: no-repeat;
+                    aspect-ratio: 1/1;
                     border-radius: 50%;
-                    background-color: $dark-gray;
+                    background-color: #dedede;
                 }
 
                 .review {

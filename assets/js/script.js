@@ -232,26 +232,11 @@ async function productView(productId) {
         "singleProduct"
     );
 
+    let reviews = await getReviews(product);
+
     let tags = "";
     product.tags.forEach((tag) => {
         tags += `<span>${tag}</span>`;
-    });
-
-    let reviews = "";
-    product.reviews.forEach((review, index) => {
-        let stars = makeStars(review.rating, index);
-        reviews += `
-        <div class="review-container">
-            <img src="assets/img/appIcon.svg" class="profilePic" />
-            <div class="review">
-                <ul>
-                    <li><h2>${review.reviewerName}</h2></li>
-                    <li><div class="stars">${stars}</div></li>
-                </ul>
-                <p>${review.comment}</p>
-            </div>
-        </div>
-        `;
     });
 
     toggleView("productView");
@@ -283,6 +268,28 @@ async function productView(productId) {
     `;
 
     productViewElement.innerHTML = productViewHTML;
+}
+
+async function getReviews(product) {
+    let reviews = [];
+    product.reviews.forEach((review, index) => {
+        let stars = makeStars(review.rating, index);
+        reviews += `
+        <div class="review-container">
+            <div class="profilePic">
+            </div>
+            <div class="review">
+                <ul>
+                    <li><h2>${review.reviewerName}</h2></li>
+                    <li><div class="stars">${stars}</div></li>
+                </ul>
+                <p>${review.comment}</p>
+            </div>
+        </div>
+        `;
+    });
+
+    return reviews;
 }
 
 //* CART FUNCTIONS */
